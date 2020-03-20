@@ -1,4 +1,4 @@
-package life.majiang.commuity.commuity.dto;
+package life.majiang.community.dto;
 
 /**
  * @Created by hfq on 2020/3/17 22:33
@@ -32,5 +32,14 @@ public class GithubUser {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    @Override
+    public String toString() {
+        return "GithubUser{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", bio='" + bio + '\'' +
+                '}';
     }
 }

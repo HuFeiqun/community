@@ -1,4 +1,4 @@
-package life.majiang.commuity.commuity.dto;
+package life.majiang.community.dto;
 
 /**
  * @Created by hfq on 2020/3/17 17:53
