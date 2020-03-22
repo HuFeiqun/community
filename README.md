@@ -7,6 +7,8 @@ https://spring.io/
 
 [spring 数据库支持](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-embedded-database-support)
 [整合mybatis](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
+[okhttp]()
+[lombok](https://projectlombok.org/features/all)
 ## 工具
 
 ## 遇到问题
@@ -41,4 +43,11 @@ create table question
 	like_count int default 0 null,
     tag varchar(256) null
 );
+-- 添加头像字段
+alter table user
+	add avatar_url varchar(100) null;
+
+
 ```
+
+

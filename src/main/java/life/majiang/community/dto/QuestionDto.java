@@ -1,14 +1,15 @@
-package life.majiang.community.model;
+package life.majiang.community.dto;
 
+import life.majiang.community.model.User;
 import lombok.Data;
 
 /**
- * @Created by hfq on 2020/3/20 22:53
+ * @Created by hfq on 2020/3/22 11:08
  * @used to:
  * @return:
  */
 @Data
-public class Question {
+public class QuestionDto {
     private Integer id;
     private String title;
     private String description;
@@ -18,4 +19,5 @@ public class Question {
     private Integer viewCount;
     private Integer likeCount;
     private String tag;
+    private User user;
 }
