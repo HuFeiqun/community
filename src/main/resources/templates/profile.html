@@ -3,21 +3,21 @@
 <head>
     <title>社区</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/community.css">
-    <script src="js/jquery.js" type="application/javascript"></script>
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!--注意这里css的路径 区别于一级目录-->
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/jquery.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9">
-            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                发现</h3><hr>
+            <h3 th:text="${sectionTitle}">我的提问</h3><hr>
 
-            <div class="media" th:each="question:${questions}">
+            <div class="media" th:each="question:${questions}" th:if="${sectionName=='questions'}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object thumbnail" src="https://avatars3.githubusercontent.com/u/39849015?v=4" alt="加载失败" >
@@ -30,14 +30,14 @@
                 </div>
                 <!--<hr>-->
             </div>
-            <nav aria-label="Page navigation" class="navbar-right">
+            <nav aria-label="Page navigation" class="navbar-right"  >
                 <ul class="pagination">
                     <li>
                         <a href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li><a th:href="@{'/index?page='+${i}}" th:each="i:${#numbers.sequence(1,pageNum)}" th:text="${i}" name="page"></a></li>
+                    <li><a th:href="@{'/profile/questions?page='+${i}}" th:each="i:${#numbers.sequence(1,pageNum)}" th:text="${i}" name="page"></a></li>
 
                     <li>
                         <a href="#" aria-label="Next">
@@ -51,9 +51,13 @@
         </div>
 
         <div class="col-lg-3">
-            <h3>
-                热门话题
-            </h3>
+            <div class="list-group">
+                <a href="/profile/questions" th:class="${sectionName=='questions'}?'list-group-item active':'list-group-item '">我的问题</a>
+                <a href="/profile/replies" th:class="${sectionName=='replies'}?'list-group-item active':'list-group-item'">
+                    最新回复
+                    <span class="badge">14</span>
+                </a>
+            </div>
         </div>
 
     </div>

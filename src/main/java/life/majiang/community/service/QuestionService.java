@@ -8,8 +8,8 @@ import life.majiang.community.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +27,29 @@ public class QuestionService {
     private UserMapper userMapper;
 
     //获取问题dto（除了问题表的字段外还包含了用户表的信息）集合
-    public List<QuestionDto> list(HttpServletRequest request){
+    public List<QuestionDto> list(Integer page,Integer size){
+        int offset = (page-1)*size;
         List<QuestionDto> questionDtos = new ArrayList<>();
-        List<Question> list = questionMapper.list();
+        List<Question> list = questionMapper.list(offset,size);
         for (Question question:list){
             QuestionDto questionDto = new QuestionDto();
             BeanUtils.copyProperties(question,questionDto);
-            questionDto.setUser((User) request.getSession().getAttribute("user"));
+            User user = userMapper.findById(question.getCreator());
+            questionDto.setUser(user);
+            questionDtos.add(questionDto);
+        }
+        return questionDtos;
+    }
+
+    public List<QuestionDto> listMyQuestion(Integer id,Integer page,Integer size){
+        int offset = (page-1)*size;
+        List<QuestionDto> questionDtos = new ArrayList<>();
+        List<Question> list = questionMapper.listMyQuestion(id,offset,size);
+        for (Question question:list){
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtils.copyProperties(question,questionDto);
+            User user = userMapper.findById(question.getCreator());
+            questionDto.setUser(user);
             questionDtos.add(questionDto);
         }
         return questionDtos;
