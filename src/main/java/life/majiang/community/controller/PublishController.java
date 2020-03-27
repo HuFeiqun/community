@@ -51,7 +51,7 @@ public class PublishController {
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andIdEqualTo(id);
-        List<Question> questions = questionMapper.selectByExample(example);
+        List<Question> questions = questionMapper.selectByExampleWithBLOBs(example);
         Question question = questions.get(0);
         User user= (User) request.getSession().getAttribute("user");
         if(question.getCreator()!=user.getId()){
