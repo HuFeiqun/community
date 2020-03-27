@@ -53,3 +53,7 @@ alter table user
 
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
+
+TO-DO LIST
++ 修复主页描述信息获取不到的问题
++ P35 CustomizeErrorController没有做

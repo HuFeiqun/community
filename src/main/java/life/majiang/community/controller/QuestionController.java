@@ -1,5 +1,7 @@
 package life.majiang.community.controller;
 
+import life.majiang.community.exception.CustomizeErrorCode;
+import life.majiang.community.exception.CustomizeException;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.model.Question;
 import life.majiang.community.model.User;
@@ -26,6 +28,9 @@ public class QuestionController {
                            Model model,
                            HttpServletRequest request){
         Question question = questionMapper.selectByPrimaryKey(id);
+        if(question==null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user",user);
         if(question.getCreator()==user.getId()){

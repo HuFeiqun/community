@@ -1,5 +1,7 @@
 package life.majiang.community.controller;
 
+import life.majiang.community.exception.CustomizeErrorCode;
+import life.majiang.community.exception.CustomizeException;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.mapper.UserMapper;
 import life.majiang.community.model.Question;
@@ -43,13 +45,18 @@ public class PublishController {
     //如果url携带了问题的id，是需要修改问题,首先获取原问题回显到表单，然后提供修改
     @GetMapping("/publish/{id}")
     public String republish(@PathVariable(name = "id") Integer id,
-                            Model model){
+                            Model model,
+                            HttpServletRequest request){
 //        System.out.println(id);
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andIdEqualTo(id);
         List<Question> questions = questionMapper.selectByExample(example);
         Question question = questions.get(0);
+        User user= (User) request.getSession().getAttribute("user");
+        if(question.getCreator()!=user.getId()){
+            throw new CustomizeException(CustomizeErrorCode.NOT_MY_QUESTION);
+        }
         model.addAttribute("title",question.getTitle());
         model.addAttribute("description",question.getDescription());
         model.addAttribute("tag",question.getTag());
