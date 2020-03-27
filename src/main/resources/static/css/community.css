@@ -22,3 +22,8 @@ body{
     font-weight: normal;
     color: #999;
 }
+
+.edit_button{
+    color: rgb(153, 153, 153);
+    font-size: 15px;
+}

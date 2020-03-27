@@ -32,8 +32,8 @@ public class QuestionService {
         int offset = (page-1)*size;
         List<QuestionDto> questionDtos = new ArrayList<>();
         QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_modified desc");
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
-
         for (Question question:questions){
             QuestionDto questionDto = new QuestionDto();
             BeanUtils.copyProperties(question,questionDto);
@@ -51,6 +51,7 @@ public class QuestionService {
         //获取
         example.createCriteria().
                 andCreatorEqualTo(id);
+        example.setOrderByClause("gmt_modified desc");
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
         for (Question question:questions){
             QuestionDto questionDto = new QuestionDto();
@@ -60,5 +61,32 @@ public class QuestionService {
             questionDtos.add(questionDto);
         }
         return questionDtos;
+    }
+
+    public void createOrUpdate(Question question){
+        if(question.getId()!=null){ //说明数据库存在这条记录，更新问题内容和修改时间
+            QuestionExample example = new QuestionExample();
+            example.createCriteria()
+                    .andIdEqualTo(question.getId());
+            List<Question> questions = questionMapper.selectByExample(example);
+            Question dbQuestion = questions.get(0);
+            dbQuestion.setGmtModified(System.currentTimeMillis());
+            dbQuestion.setTitle(question.getTitle());
+            dbQuestion.setDescription(question.getDescription());
+            dbQuestion.setGmtCreate(dbQuestion.getGmtCreate());
+            dbQuestion.setViewCount(dbQuestion.getViewCount());
+            dbQuestion.setLikeCount(dbQuestion.getLikeCount());
+            dbQuestion.setCommentCount(dbQuestion.getCommentCount());
+            dbQuestion.setTag(question.getTag());
+            questionMapper.updateByPrimaryKey(dbQuestion);
+        }else { //插入
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            question.setLikeCount(0);
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            questionMapper.insert(question);
+        }
+
     }
 }

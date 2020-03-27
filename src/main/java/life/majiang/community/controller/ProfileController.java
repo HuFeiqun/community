@@ -45,7 +45,7 @@ public class ProfileController {
             List<QuestionDto> questionDtos = questionService.listMyQuestion(user.getId(), page, size);
             model.addAttribute("questions",questionDtos);
             QuestionExample questionExample = new QuestionExample();
-            questionExample.createCriteria().andIdEqualTo(user.getId());
+            questionExample.createCriteria().andCreatorEqualTo(user.getId());
             int myQuestionCount = (int) questionMapper.countByExample(questionExample);
             double pageNum =  Math.ceil(myQuestionCount*1.0/size); //根据questionNum算出页面数
             model.addAttribute("pageNum",pageNum);

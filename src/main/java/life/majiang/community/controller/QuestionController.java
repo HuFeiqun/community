@@ -27,6 +27,7 @@ public class QuestionController {
                            HttpServletRequest request){
         Question question = questionMapper.selectByPrimaryKey(id);
         User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user",user);
         if(question.getCreator()==user.getId()){
             model.addAttribute("question",question);
         }
