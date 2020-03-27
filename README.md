@@ -9,6 +9,7 @@ https://spring.io/
 [整合mybatis](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 [okhttp]()
 [lombok](https://projectlombok.org/features/all)
+[MyBatis Generator](http://mybatis.org/generator/index.html)
 ## 工具
 
 ## 遇到问题
@@ -50,4 +51,5 @@ alter table user
 
 ```
 
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 

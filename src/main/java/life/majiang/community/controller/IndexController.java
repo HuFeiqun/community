@@ -3,6 +3,7 @@ package life.majiang.community.controller;
 import life.majiang.community.dto.QuestionDto;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.mapper.UserMapper;
+import life.majiang.community.model.QuestionExample;
 import life.majiang.community.model.User;
 import life.majiang.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class IndexController {
                         @RequestParam(name = "size",defaultValue = "5") Integer size){
         List<QuestionDto> list = questionService.list(page,size);
         model.addAttribute("questions",list);
-        double pageNum =  Math.ceil(questionMapper.count()*1.0/size); //根据questionNum算出页面数
+        double pageNum =  Math.ceil(questionMapper.countByExample(new QuestionExample())*1.0/size); //根据questionNum算出页面数
         model.addAttribute("pageNum",pageNum);
         return "index";
     }

@@ -2,6 +2,7 @@ package life.majiang.community.controller;
 
 import life.majiang.community.dto.QuestionDto;
 import life.majiang.community.mapper.QuestionMapper;
+import life.majiang.community.model.QuestionExample;
 import life.majiang.community.model.User;
 import life.majiang.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,16 @@ public class ProfileController {
             model.addAttribute("sectionTitle","我的提问");
             List<QuestionDto> questionDtos = questionService.listMyQuestion(user.getId(), page, size);
             model.addAttribute("questions",questionDtos);
-            double pageNum =  Math.ceil(questionMapper.countMyQuestion(user.getId())*1.0/size); //根据questionNum算出页面数
+            QuestionExample questionExample = new QuestionExample();
+            questionExample.createCriteria().andIdEqualTo(user.getId());
+            int myQuestionCount = (int) questionMapper.countByExample(questionExample);
+            double pageNum =  Math.ceil(myQuestionCount*1.0/size); //根据questionNum算出页面数
             model.addAttribute("pageNum",pageNum);
 
         }
         else if("replies".equals(section)){
             model.addAttribute("sectionTitle","最新回复");
+            model.addAttribute("pageNum",0);
         }
         return "profile";
 

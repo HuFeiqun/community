@@ -24,9 +24,9 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}">问题标题-example</h4>
+                    <h4 class="media-heading"><a th:href="@{'/question/'+${question.id}}">[[${question.title}]]</a></h4>
                     <span th:text="${#strings.abbreviate(question.description,25)}">问题描述</span>
-                    <span class="count_info"><span th:text="${question.user.name}"></span> 发起了问题 <span th:text="${question.viewCount}"></span>人浏览 • <span th:text="${question.likeCount}"></span>个点赞  • <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}">2000年5月5日</span> </span>
+                    <span class="count_info"> <span th:text="${question.viewCount}"></span>人浏览 • <span th:text="${question.likeCount}"></span>个点赞  • <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}">2000年5月5日</span> </span>
                 </div>
                 <!--<hr>-->
             </div>

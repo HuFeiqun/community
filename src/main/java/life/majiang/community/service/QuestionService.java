@@ -4,11 +4,12 @@ import life.majiang.community.dto.QuestionDto;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.mapper.UserMapper;
 import life.majiang.community.model.Question;
+import life.majiang.community.model.QuestionExample;
 import life.majiang.community.model.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +31,13 @@ public class QuestionService {
     public List<QuestionDto> list(Integer page,Integer size){
         int offset = (page-1)*size;
         List<QuestionDto> questionDtos = new ArrayList<>();
-        List<Question> list = questionMapper.list(offset,size);
-        for (Question question:list){
+        QuestionExample example = new QuestionExample();
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
+
+        for (Question question:questions){
             QuestionDto questionDto = new QuestionDto();
             BeanUtils.copyProperties(question,questionDto);
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDto.setUser(user);
             questionDtos.add(questionDto);
         }
@@ -44,11 +47,15 @@ public class QuestionService {
     public List<QuestionDto> listMyQuestion(Integer id,Integer page,Integer size){
         int offset = (page-1)*size;
         List<QuestionDto> questionDtos = new ArrayList<>();
-        List<Question> list = questionMapper.listMyQuestion(id,offset,size);
-        for (Question question:list){
+        QuestionExample example = new QuestionExample();
+        //获取
+        example.createCriteria().
+                andCreatorEqualTo(id);
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
+        for (Question question:questions){
             QuestionDto questionDto = new QuestionDto();
             BeanUtils.copyProperties(question,questionDto);
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDto.setUser(user);
             questionDtos.add(questionDto);
         }
