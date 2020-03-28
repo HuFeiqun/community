@@ -1,6 +1,7 @@
 package life.majiang.community.service;
 
 import life.majiang.community.dto.QuestionDto;
+import life.majiang.community.mapper.QuestionExtMapper;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.mapper.UserMapper;
 import life.majiang.community.model.Question;
@@ -26,6 +27,9 @@ public class QuestionService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     //获取问题dto（除了问题表的字段外还包含了用户表的信息）集合
     public List<QuestionDto> list(Integer page,Integer size){
@@ -88,5 +92,12 @@ public class QuestionService {
             questionMapper.insert(question);
         }
 
+    }
+
+    public void incView(int id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }

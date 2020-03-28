@@ -5,6 +5,7 @@ import life.majiang.community.exception.CustomizeException;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.model.Question;
 import life.majiang.community.model.User;
+import life.majiang.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,10 @@ public class QuestionController {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Autowired
+    private QuestionService questionService;
+
+
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") int id,
                            Model model,
@@ -33,9 +38,8 @@ public class QuestionController {
         }
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user",user);
-        if(question.getCreator()==user.getId()){
-            model.addAttribute("question",question);
-        }
+        questionService.incView(id);   //更新阅读数
+        model.addAttribute("question",question);
         return "question";
     }
 }

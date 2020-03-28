@@ -50,6 +50,26 @@ alter table user
 
 
 ```
+**快捷键**
+shift+F9  只改html
+cmd+ alt + o 去除无用的引入 
+shift + f6 选中要替换的值
+cmd + alt +v 自动抽取出变量
+在html文件中 ctrl+w （可以连续按 不断选中上一层）
+
+P18 20分钟提到 数据库验证登录的缺陷 可以用redis改进            
+
+ctrl+shift+F
+ctrl+F12 
+
+
+### 学习体会
+updateByExample需要将表的条件全部给出，比如一个一个表有三个字段，就必须给三个字段给他，不给会设为null，
+而updateByExampleSelective不同，当某一实体类的属性为null时，mybatis会使用动态sql过滤掉，不更新该字段：
+
+
+
+
 
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
@@ -57,3 +77,18 @@ mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 TO-DO LIST
 + 修复主页描述信息获取不到的问题
 + P35 CustomizeErrorController没有做
+
+
+----
+P36
+实现阅读数展示，原来的实现存在并发问题
+```java
+        Question question = questionMapper.selectByPrimaryKey(id);
+        Question updateQuestion = new Question();
+        updateQuestion.setViewCount(question.getViewCount()+1);
+        QuestionExample example = new QuestionExample();
+        example.createCriteria()
+                .andIdEqualTo(id);
+        questionMapper.updateByExampleSelective(updateQuestion, example);
+```
+改进方法：在数据库字段上做累加操作，不要获取数据库字段成为变量再操作
