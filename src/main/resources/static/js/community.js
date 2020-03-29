@@ -19,6 +19,7 @@ function post() {
             console.log(response);
             if(response.code == 200){
                 $("#comment_dialog_box").hide();
+                window.location.reload();
             }else {
                 if(response.code==2003){ //未登录引起错误
                     var isAccepted = confirm(response.message);

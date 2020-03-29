@@ -116,3 +116,14 @@ P36
         questionMapper.updateByExampleSelective(updateQuestion, example);
 ```
 改进方法：在数据库字段上做累加操作，不要获取数据库字段成为变量再操作
+
+## 一些巧妙地思路
+P42 38' 查询CommentDtos时，为了避免多次重复查询同一条User记录（当一个问题下某用户多次回复会发生这一情况），使用Map存储（对于某一条Comment记录来说，
+根据Commentator字段查询Map就能获取到User信息），减少查询次数
+
+
+## 待继续学习
+P42 lambda表达式
+
+
+## bug

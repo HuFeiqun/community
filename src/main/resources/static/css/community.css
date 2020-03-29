@@ -21,6 +21,7 @@ body{
     font-size: 12px;
     font-weight: normal;
     color: #999;
+    float: right;
 }
 
 .edit_button{
@@ -40,3 +41,32 @@ body{
     float: right;
     margin-bottom: 10px;
 }
+
+.comment_count_info{
+    top: 16px;
+    left: 20px;
+    margin: 0;
+    font-size: 20px;
+}
+
+.custom_hr{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.custom_media_heading{
+    font-size: 13px;
+}
+
+.comment_operate_menu .my_icon{
+    font-size: 20px;
+    margin-right: 5px;
+    color: #999999;
+    cursor: pointer;
+}
+.comment_operate_menu .my_icon:hover{
+    color: #499ef3;
+    /*background-color:#66afe9;*/
+
+}
+

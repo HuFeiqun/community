@@ -72,17 +72,8 @@ public class QuestionService {
             QuestionExample example = new QuestionExample();
             example.createCriteria()
                     .andIdEqualTo(question.getId());
-            List<Question> questions = questionMapper.selectByExample(example);
-            Question dbQuestion = questions.get(0);
-            dbQuestion.setGmtModified(System.currentTimeMillis());
-            dbQuestion.setTitle(question.getTitle());
-            dbQuestion.setDescription(question.getDescription());
-            dbQuestion.setGmtCreate(dbQuestion.getGmtCreate());
-            dbQuestion.setViewCount(dbQuestion.getViewCount());
-            dbQuestion.setLikeCount(dbQuestion.getLikeCount());
-            dbQuestion.setCommentCount(dbQuestion.getCommentCount());
-            dbQuestion.setTag(question.getTag());
-            questionMapper.updateByPrimaryKey(dbQuestion);
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.updateByPrimaryKeySelective(question);
         }else { //插入
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());

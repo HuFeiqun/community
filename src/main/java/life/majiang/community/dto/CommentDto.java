@@ -1,20 +1,23 @@
 package life.majiang.community.dto;
 
+import life.majiang.community.model.User;
 import lombok.Data;
 
 /**
- * @Created by hfq on 2020/3/29 1:09
- * @used to: 回复内容要从前端接受到的数据结构
- * {
- *   "parentId": 16,
- *   "content":"回复内容测试",
- *   "type":1
- * }
+ * @Created by hfq on 2020/3/30 3:20
+ * @used to:查询问题时返回的Dto
  * @return:
  */
 @Data
 public class CommentDto {
+    private Long id;
     private Long parentId;
+    private Integer type;
+    private Long commentator;
+    private Long gmtCreate;
+    private Long gmtModified;
+    private Integer likeCount;
     private String content;
-    private int type;
+
+    private User user;
 }
