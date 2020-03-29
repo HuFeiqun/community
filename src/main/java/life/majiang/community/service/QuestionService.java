@@ -48,7 +48,7 @@ public class QuestionService {
         return questionDtos;
     }
 
-    public List<QuestionDto> listMyQuestion(Integer id,Integer page,Integer size){
+    public List<QuestionDto> listMyQuestion(Long id,Integer page,Integer size){
         int offset = (page-1)*size;
         List<QuestionDto> questionDtos = new ArrayList<>();
         QuestionExample example = new QuestionExample();
@@ -94,7 +94,7 @@ public class QuestionService {
 
     }
 
-    public void incView(int id) {
+    public void incView(Long id) {
         Question question = new Question();
         question.setId(id);
         question.setViewCount(1);

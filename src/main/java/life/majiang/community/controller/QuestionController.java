@@ -29,7 +29,7 @@ public class QuestionController {
 
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable(name = "id") int id,
+    public String question(@PathVariable(name = "id") Long id,
                            Model model,
                            HttpServletRequest request){
         Question question = questionMapper.selectByPrimaryKey(id);

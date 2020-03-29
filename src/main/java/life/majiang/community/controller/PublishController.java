@@ -44,7 +44,7 @@ public class PublishController {
 
     //如果url携带了问题的id，是需要修改问题,首先获取原问题回显到表单，然后提供修改
     @GetMapping("/publish/{id}")
-    public String republish(@PathVariable(name = "id") Integer id,
+    public String republish(@PathVariable(name = "id") Long id,
                             Model model,
                             HttpServletRequest request){
 //        System.out.println(id);
@@ -75,7 +75,7 @@ public class PublishController {
             @RequestParam(name = "tag") String tag,
             HttpServletRequest request,
             Model model,
-            @RequestParam(name = "id", required = false) Integer id
+            @RequestParam(name = "id", required = false) Long id
             ){
         model.addAttribute("title",title);
         model.addAttribute("description",description);

@@ -11,7 +11,8 @@ https://spring.io/
 [lombok](https://projectlombok.org/features/all)
 [MyBatis Generator](http://mybatis.org/generator/index.html)
 ## 工具
-
+[JSON在线解析工具](https://jsoneditoronline.org/)
+[apipost]
 ## 遇到问题
 P7 下拉列表不显示 先引入jquery
 
@@ -20,7 +21,7 @@ P7 下拉列表不显示 先引入jquery
 创建user表
 ```sql 
 create table user(
-  id int auto_increment primary key,
+  id bigint auto_increment primary key,
   name varchar(50),
   account_id varchar(50),
   token char(36),
@@ -33,12 +34,12 @@ create table user(
 ```sql
 create table question
 (
-    id int primary key auto_increment,
+    id bigint primary key auto_increment,
 	title varchar(50) null,
 	description text null,
 	gmt_create bigint null,
 	gmt_modified bigint null,
-	creator int null,
+	creator bigint null,
 	comment_count int default 0 null,
 	view_count int default 0 null,
 	like_count int default 0 null,
@@ -47,6 +48,25 @@ create table question
 -- 添加头像字段
 alter table user
 	add avatar_url varchar(100) null;
+-- 添加头像字段
+alter table user
+	add avatar_url varchar(100) null;
+```
+创建回复表
+```sql
+create table comment
+(
+  id bigint not null auto_increment,
+  parent_id bigint not null comment '所回复问题的id',
+  type int not null comment '区分一级回复和二级回复',
+  content text not null ,
+  commentator bigint not null comment '评论人id',
+  gmt_create bigint not null,
+  gmt_modified bigint null,
+  like_count int default 0 null,
+  constraint comment_pk
+    primary key (id)
+);
 
 
 ```
@@ -61,6 +81,8 @@ P18 20分钟提到 数据库验证登录的缺陷 可以用redis改进
 
 ctrl+shift+F
 ctrl+F12 
+ctrl+shift + U 大小写转换
+调试时： alt+F8 调试时执行选中的方法
 
 
 ### 学习体会
@@ -70,7 +92,7 @@ updateByExample需要将表的条件全部给出，比如一个一个表有三�
 
 
 
-
+--mybatis自动生成的命令
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
 
