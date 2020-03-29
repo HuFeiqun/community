@@ -9,6 +9,16 @@
     <script src="js/jquery.js" type="application/javascript"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
+<script type="application/javascript">
+    window.onload = function () {  //加载完成执行
+        var isClosePage = window.localStorage.getItem("closePage");
+        if(isClosePage=="yes")
+        {
+            window.close();
+            window.localStorage.removeItem("closePage");
+        }
+    }
+</script>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main">

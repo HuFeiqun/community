@@ -40,6 +40,16 @@ public class AuthorizeController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/logout")  //退出登录
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response) {
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
@@ -70,4 +80,6 @@ public class AuthorizeController {
             return "redirect:/";
         }
     }
+
+
 }

@@ -10,6 +10,8 @@ https://spring.io/
 [okhttp]()
 [lombok](https://projectlombok.org/features/all)
 [MyBatis Generator](http://mybatis.org/generator/index.html)
+[Jquery](https://api.jquery.com/)
+[Html5-localStorage](https://www.runoob.com/jsref/prop-win-localstorage.html)
 ## 工具
 [JSON在线解析工具](https://jsoneditoronline.org/)
 [apipost]
