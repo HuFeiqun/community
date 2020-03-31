@@ -14,7 +14,13 @@ https://spring.io/
 [Html5-localStorage](https://www.runoob.com/jsref/prop-win-localstorage.html)
 ## 工具
 [JSON在线解析工具](https://jsoneditoronline.org/)
+[JavaScript 日期处理类库](http://momentjs.cn/)
 [apipost]
+
+## 学习文章
+[thymeleaf页面中使用data-*自定义属性](https://blog.csdn.net/Milogenius/article/details/90212589?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
+
+
 ## 遇到问题
 P7 下拉列表不显示 先引入jquery
 
@@ -69,6 +75,9 @@ create table comment
   constraint comment_pk
     primary key (id)
 );
+alter table comment
+	add comment_count int default 0 null;
+
 
 
 ```
@@ -81,6 +90,8 @@ cmd + alt +v 自动抽取出变量
 
 P18 20分钟提到 数据库验证登录的缺陷 可以用redis改进            
 
+ctrl + f6 选中方法后按下该快捷键,可快速修改对应方法的形参
+ctrl+alt+p :抽取参数作为方法的形参
 ctrl+shift+F
 ctrl+F12 
 ctrl+shift + U 大小写转换

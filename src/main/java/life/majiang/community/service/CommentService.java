@@ -1,6 +1,5 @@
 package life.majiang.community.service;
 
-import life.majiang.community.dto.CommentCreateDto;
 import life.majiang.community.dto.CommentDto;
 import life.majiang.community.enums.CommentTypeEnum;
 import life.majiang.community.exception.CustomizeErrorCode;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Created by hfq on 2020/3/29 15:09
@@ -50,6 +48,8 @@ public class CommentService {
             throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_NOT_FOUND);
         }
 
+
+
         if(comment.getType() == CommentTypeEnum.COMMENT.getType()){ //回复评论
             Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
             if(dbComment == null){
@@ -68,11 +68,18 @@ public class CommentService {
         }
     }
 
-    public List<CommentDto> listByQuestionId(Long id) {
+    /**
+     * 获取指定问题或者评论的所有回复记录
+     * @param id
+     * @param type
+     * @return
+     */
+    public List<CommentDto> listByParentId(Long id, CommentTypeEnum type) {
         CommentExample example = new CommentExample();
         example.createCriteria()
                 .andParentIdEqualTo(id)
-                .andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+                .andTypeEqualTo(type.getType());
+        example.setOrderByClause("gmt_modified desc");
         List<Comment> comments = commentMapper.selectByExampleWithBLOBs(example);
 
         if(comments.size() == 0){

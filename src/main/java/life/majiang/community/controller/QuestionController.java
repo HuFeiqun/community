@@ -1,7 +1,7 @@
 package life.majiang.community.controller;
 
-import life.majiang.community.dto.CommentCreateDto;
 import life.majiang.community.dto.CommentDto;
+import life.majiang.community.enums.CommentTypeEnum;
 import life.majiang.community.exception.CustomizeErrorCode;
 import life.majiang.community.exception.CustomizeException;
 import life.majiang.community.mapper.QuestionMapper;
@@ -44,7 +44,7 @@ public class QuestionController {
         }
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user",user);
-        List<CommentDto>  commentDtos = commentService.listByQuestionId(id);
+        List<CommentDto>  commentDtos = commentService.listByParentId(id, CommentTypeEnum.QUESTION);
         model.addAttribute("commentDtos",commentDtos);
         questionService.incView(id);   //更新阅读数
         model.addAttribute("question",question);

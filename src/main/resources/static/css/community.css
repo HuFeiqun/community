@@ -21,7 +21,7 @@ body{
     font-size: 12px;
     font-weight: normal;
     color: #999;
-    float: right;
+    /*float: right;*/
 }
 
 .edit_button{
@@ -67,6 +67,24 @@ body{
 .comment_operate_menu .my_icon:hover{
     color: #499ef3;
     /*background-color:#66afe9;*/
-
 }
 
+.comment_operate_menu .active{
+    color: #499ef3;
+    /*background-color:#66afe9;*/
+}
+
+.inner_comments_box{
+    margin: 10px 0px;
+    padding-top:10px;
+    border:1px solid #eee;
+    border-radius: 5px;
+}
+
+.inner_comment_dialog_box{
+    /*background-color: #8c8c8c;*/
+}
+
+.inner_comment_dialog_box .btn{
+    margin: 10px 0px;
+}
