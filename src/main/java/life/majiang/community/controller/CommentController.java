@@ -27,6 +27,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    //用于提交回复（包含一级回复和二级回复）
     @ResponseBody
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
     public Object post(@RequestBody CommentCreateDto commentCreateDto,
@@ -49,11 +50,11 @@ public class CommentController {
         return ResultDto.okOf();
     }
 
+    //在问题页面的回复详情页 点击“评论”图标（查询二级回复）
     @ResponseBody
     @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
     public ResultDto<List<CommentDto>> comments(@PathVariable(name = "id") Long commentId){
         List<CommentDto> commentDtos = commentService.listByParentId(commentId, CommentTypeEnum.COMMENT);
         return ResultDto.okOf(commentDtos);
     }
-
 }

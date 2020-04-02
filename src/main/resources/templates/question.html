@@ -12,6 +12,15 @@
     <script src="/js/moment.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
 </head>
+<script type="application/javascript">
+    window.onload = function () {  //加载完成执行，判断是否展开某一条二级评论(会展开刚添加二级回复)
+        var comment_Id = window.localStorage.getItem("reflashInnerComments");
+        if (comment_Id) {
+            collapseParticularComments(comment_Id);
+            window.localStorage.removeItem("reflashInnerComments");
+        }
+    }
+</script>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main">
@@ -29,6 +38,10 @@
                 <a><span class="glyphicon glyphicon-share-alt" aria-hidden="true"><span
                         class="edit_button">分享</span></span></span></a>
                 <hr class="custom_hr">
+                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                <span class="label label-info" th:text="${question.tag}">tag1</span>
+                <span class="label label-info" th:text="${question.tag}">tag2</span>
+                <br>
                 <div th:text="${question.description}" class="mark">问题详情</div>
                 <hr class="custom_hr">
                 <div class="comment_count_info navbar-right"><span th:text="${question.commentCount}"></span>个回复</div>
@@ -48,10 +61,13 @@
                         <span th:text="${commentDto.content}">回复内容</span>
                         <br>
                         <span class="comment_operate_menu">
-                            <span class="glyphicon glyphicon-thumbs-up my_icon" aria-hidden="true" th:text="${commentDto.likeCount}"> </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-thumbs-up my_icon" aria-hidden="true"
+                                  th:text="${commentDto.likeCount}"> </span>&nbsp;&nbsp;&nbsp;&nbsp;
                             <!--<span class="glyphicon glyphicon-thumbs-down my_icon" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;&nbsp;-->
                             <span class="glyphicon glyphicon-comment my_icon" aria-hidden="true"
-                                  th:data-id="${commentDto.id}" onclick="collapseComments(this)" th:text="6"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                  th:data-id="${commentDto.id}" onclick="collapseComments(this)"
+                                  th:id="'comment_detail-'+${commentDto.id}"
+                                  th:text="${commentDto.commentCount}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
                             <span class="pull-right text-muted"> 时间:<span
                                     th:text="${#dates.format(commentDto.getGmtCreate(), 'yyyy-MM-dd HH:mm')}">2000年5月5日</span> </span>
                         </span>
