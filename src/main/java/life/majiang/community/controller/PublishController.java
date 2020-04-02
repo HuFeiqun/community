@@ -99,7 +99,7 @@ public class PublishController {
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(description);
-        question.setTag(tag);
+        question.setTag(tag.replace("，",","));  //将中文的逗号符转化成英文逗号存储在数据库
         question.setCreator(user.getId());
         if(id!=null)
         {

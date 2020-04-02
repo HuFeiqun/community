@@ -91,4 +91,12 @@ public class QuestionService {
         question.setViewCount(1);
         questionExtMapper.incView(question);
     }
+
+    public List<Question> selectRelatedQuestions(Question question) {
+        Question question1 = new Question();
+        question1.setId(question.getId());
+        question1.setTag(question.getTag().replace(",","|"));
+        List<Question> relatedQuestions = questionExtMapper.selectRelatedQuestions(question1);
+        return relatedQuestions;
+    }
 }

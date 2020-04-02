@@ -88,3 +88,18 @@ body{
 .inner_comment_dialog_box .btn{
     margin: 10px 0px;
 }
+
+.related_question_ul{
+    padding-left: 0;
+}
+.related_question_ul li{
+    margin-bottom: 10px;
+}
+
+.question_desc_box{
+    line-height: 30px;
+}
+
+.my_wechat_img{
+    width: 300px;
+}

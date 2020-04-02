@@ -29,4 +29,10 @@
     where id = #{id}
     </update>
 
+    <!--获取相关问题（拥有共同的问题tag）-->
+    <select id="selectRelatedQuestions" parameterType="life.majiang.community.model.Question" resultMap="BaseResultMap">
+        select * from question
+        where tag regexp #{tag,jdbcType=VARCHAR}
+        and id != #{id}
+    </select>
 </mapper>

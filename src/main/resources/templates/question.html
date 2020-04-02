@@ -39,10 +39,11 @@
                         class="edit_button">分享</span></span></span></a>
                 <hr class="custom_hr">
                 <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                <span class="label label-info" th:text="${question.tag}">tag1</span>
-                <span class="label label-info" th:text="${question.tag}">tag2</span>
+                <span th:each="tag : ${question.tag.split(',')}">
+                    <span class="label label-info"  th:text="${tag}"></span> &nbsp;&nbsp;&nbsp;
+                </span>
                 <br>
-                <div th:text="${question.description}" class="mark">问题详情</div>
+                <p th:text="${question.description}" class="mark question_desc_box">问题详情</p>
                 <hr class="custom_hr">
                 <div class="comment_count_info navbar-right"><span th:text="${question.commentCount}"></span>个回复</div>
             </div>
@@ -123,6 +124,18 @@
                     积分：888
                 </div>
             </div>
+            <hr>
+
+            <h4><strong>联系站长</strong></h4>
+            <div>
+                <img src="/img/wechat2.png" class="img-thumbnail my_wechat_img">
+            </div>
+            <hr>
+            <h4><strong>相关问题</strong></h4>
+            <ul class="related_question_ul">
+                <li th:each="relatedQuestion : ${relatedQuestions}"><a th:href="@{'/question/'+${relatedQuestion.id}}" th:text="${relatedQuestion.title}">1</a></li>
+            </ul>
+
         </div>
 
     </div>

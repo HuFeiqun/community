@@ -48,6 +48,8 @@ public class QuestionController {
         model.addAttribute("commentDtos",commentDtos);
         questionService.incView(id);   //更新阅读数
         model.addAttribute("question",question);
+        List <Question> relatedQuestions = questionService.selectRelatedQuestions(question); //获取相关问题列表
+        model.addAttribute("relatedQuestions",relatedQuestions);
         return "question";
     }
 
