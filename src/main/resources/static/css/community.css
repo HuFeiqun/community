@@ -2,10 +2,16 @@ body{
     background-color: #efefef;
 }
 
+.menu_item:hover {
+    /*padding: 20px;*/
+    background-color:  #F3F3F3;;
+}
+
 .main{
     background-color: white;
     margin: 30px;
 }
+
 
 .btn-publish{
     float:right;
