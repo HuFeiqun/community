@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="../css/community.css">
     <script src="../js/jquery.js" type="application/javascript"></script>
     <script src="../js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="../js/community.js" type="application/javascript"></script>
 </head>
+<script type="application/javascript">
+    window.onload= function () {
+        loadTagCss();
+    }
+</script>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 
@@ -30,7 +36,57 @@
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签</label>
-                    <textarea class="form-control" name="tag" id="tag" th:text="${tag}" placeholder="输入标签，以逗号分隔"></textarea>
+                    <textarea class="form-control" rows="1" readonly="true" name="tag" id="tag" th:text="${tag}" placeholder="请在下面的标签栏选择标签..."></textarea>
+
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#language" aria-controls="home" role="tab" data-toggle="tab">开发语言</a></li>
+                            <li role="presentation"><a href="#frame" role="tab" data-toggle="tab">平台框架</a></li>
+                            <li role="presentation"><a href="#server"  role="tab" data-toggle="tab">服务器</a></li>
+                            <li role="presentation"><a href="#database" role="tab" data-toggle="tab">数据库</a></li>
+                            <li role="presentation"><a href="#tools"  role="tab" data-toggle="tab">开发工具</a></li>
+                            <li role="presentation"><a href="#others" role="tab" data-toggle="tab">其他</a></li>
+                        </ul>
+                        <hr class="custom_hr">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="language">
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-C" data-tag="C">C</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Java" data-tag="Java">Java</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Javascript" data-tag="Javascript">Javascript</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Python" data-tag="Python">Python</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-php" data-tag="php">php</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-shell" data-tag="shell">shell</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-html" data-tag="html">html</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-css" data-tag="css">css</span>&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="frame">
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Spring" data-tag="Spring">Spring</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-SpringBoot" data-tag="SpringBoot">SpringBoot</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-SpringMVC" data-tag="SpringMVC">SpringMVC</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Jquery" data-tag="Jquery">Jquery</span>&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="server">
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Tomcat" data-tag="Tomcat">Tomcat</span>&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="database">
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Mysql" data-tag="Mysql">Mysql</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Oracle" data-tag="Oracle">Oracle</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-SqlServer" data-tag="SqlServer">SqlServer</span>&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="tools">
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Idea" data-tag="Idea">Idea</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Git" data-tag="Git">Git</span>&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="others">
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-Algorithm" data-tag="Algorithm">Algorithm</span>&nbsp;&nbsp;&nbsp;
+                                <span class="label label-info my_label" onclick="selectTag(this)" id="tag-DataStructure" data-tag="DataStructure">DataStructure</span>&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
                 <button type="submit" class="btn btn-success btn-publish" >发布问题</button>
             </form>

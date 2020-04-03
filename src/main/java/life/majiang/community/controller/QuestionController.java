@@ -35,7 +35,7 @@ public class QuestionController {
     private CommentService commentService;
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable(name = "id") Long id,
+    public String question(@PathVariable(name = "id",required = false) Long id,
                            Model model,
                            HttpServletRequest request){
         Question question = questionMapper.selectByPrimaryKey(id);

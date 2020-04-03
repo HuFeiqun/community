@@ -114,3 +114,7 @@ body{
     /*list-style-type:none;*/
     margin-bottom: 30px;
 }
+
+.my_label{
+    cursor: pointer;
+}

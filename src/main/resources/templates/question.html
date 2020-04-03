@@ -40,7 +40,7 @@
                 <hr class="custom_hr">
                 <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
                 <span th:each="tag : ${question.tag.split(',')}">
-                    <span class="label label-info" th:text="${tag}"></span> &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{'/index?tag='+${tag}}"><span class="label label-info my_label" th:text="${tag}"></span></a> &nbsp;&nbsp;&nbsp;
                 </span>
                 <br>
                 <p th:text="${question.description}" class="mark question_desc_box">问题详情</p>

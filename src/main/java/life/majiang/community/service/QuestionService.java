@@ -1,6 +1,7 @@
 package life.majiang.community.service;
 
 import life.majiang.community.dto.QuestionDto;
+import life.majiang.community.dto.QuestionQueryDto;
 import life.majiang.community.mapper.QuestionExtMapper;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.mapper.UserMapper;
@@ -95,8 +96,30 @@ public class QuestionService {
     public List<Question> selectRelatedQuestions(Question question) {
         Question question1 = new Question();
         question1.setId(question.getId());
-        question1.setTag(question.getTag().replace(",","|"));
+        question1.setTag(question.getTag().replace(",","|").substring(0,question.getTag().length()-1));  //截取掉最后一个逗号
         List<Question> relatedQuestions = questionExtMapper.selectRelatedQuestions(question1);
         return relatedQuestions;
+    }
+
+    public List<QuestionDto> listByTag(String tag,Integer page,Integer size){
+        int offset = (page-1)*size;
+        List<QuestionDto> questionDtos = new ArrayList<>();
+        QuestionExample example = new QuestionExample();
+        example.createCriteria()
+                .andTagEqualTo(tag);
+        example.setOrderByClause("gmt_modified desc");
+        QuestionQueryDto questionQueryDto = new QuestionQueryDto();
+        questionQueryDto.setTag(tag);
+        questionQueryDto.setOffset(offset);
+        questionQueryDto.setSize(size);
+        List<Question> questions = questionExtMapper.selectByTag(questionQueryDto);
+        for (Question question:questions){
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtils.copyProperties(question,questionDto);
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
+            questionDto.setUser(user);
+            questionDtos.add(questionDto);
+        }
+        return questionDtos;
     }
 }

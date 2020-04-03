@@ -47,7 +47,6 @@ public class PublishController {
     public String republish(@PathVariable(name = "id") Long id,
                             Model model,
                             HttpServletRequest request){
-//        System.out.println(id);
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andIdEqualTo(id);
@@ -79,7 +78,7 @@ public class PublishController {
             ){
         model.addAttribute("title",title);
         model.addAttribute("description",description);
-        model.addAttribute("tag",tag);
+//        model.addAttribute("tag",tag.concat(","));
         if(title==null || title==""){
             model.addAttribute("error","问题标题不能为空!");
             return "publish";

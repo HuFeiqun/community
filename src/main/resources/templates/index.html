@@ -47,7 +47,7 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li><a th:href="@{'/index?page='+${i}}" th:each="i:${#numbers.sequence(1,pageNum)}" th:text="${i}" name="page"></a></li>
+                    <li><a th:href="@{'/index?page='+${i}+'&tag='+${tag}}" th:each="i:${#numbers.sequence(1,pageNum)}" th:text="${i}" name="page"></a></li>
 
                     <li>
                         <a href="#" aria-label="Next">

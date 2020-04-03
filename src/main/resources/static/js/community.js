@@ -162,3 +162,39 @@ function collapseParticularComments(id) {
     innerCommentContainer.addClass("in"); //展开二级评论框
     // e.classList.add("active"); //使得图标高亮
 }
+
+/**
+ * 在编辑问题页面，加载标签的样式
+ */
+function loadTagCss() {
+    var tag_textarea_element = $("#tag");
+    var tag_content = tag_textarea_element.text();
+    if(tag_content=="")
+        return;
+    var tags = tag_content.substr(0,tag_content.length-1).split(",");
+    for(index=0;index<tags.length;index++){
+        console.log(tags[index]);
+        $("#tag-"+tags[index]).css("background-color","gray");   //将已选中标签标记为灰色
+    }
+
+}
+
+/**
+ *选中标签后，将标签添加至标签输入栏
+ */
+function selectTag(e){
+    console.log(e);
+    var new_tag = e.getAttribute("data-tag");
+    var tag_textarea_element = $("#tag");
+    var tag_content = tag_textarea_element.text();
+    if(tag_content.search(new_tag+",")==-1){ //如果标签输入栏没有这个标签就添加该标签(同时将该标签标记成灰色），否则取消该标签(同时将标签标记成蓝色）
+        tag_textarea_element.text(tag_content+""+new_tag+",");
+        $("#tag-"+new_tag).css("background-color","gray");
+    }
+    else{
+        tag_textarea_element.text(tag_content.replace(new_tag+",",""));
+        $("#tag-"+new_tag).css("background-color","#5bc0de");
+        // tag_textarea_element.addClass()
+    }
+
+}
