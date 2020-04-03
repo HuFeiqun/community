@@ -9,6 +9,8 @@
     <script src="../js/jquery.js" type="application/javascript"></script>
     <script src="../js/bootstrap.min.js" type="application/javascript"></script>
     <script src="../js/community.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="../editor.md/css/editormd.min.css" />
+
 </head>
 <script type="application/javascript">
     window.onload= function () {
@@ -20,7 +22,7 @@
 
 <div class="container-fluid main">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" id="edit-part">
             <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起问题</h2>
             <hr>
             <form action="/publish" method="post">
@@ -29,11 +31,24 @@
                     <label for="title">问题标题(简单扼要)：</label>
                     <input type="text" class="form-control" id="title" name="title"  th:value="${title}" placeholder="问题标题（15字以内）">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="question-editor">
                     <label for="description">问题补充(必填,参照右侧提示)：</label>
                     <textarea class="form-control" name="description" id="description" cols="30" rows="10"
                               th:text="${description}" placeholder="问题详情（140字以内）"></textarea>
                 </div>
+                <script src="../editor.md/editormd.js"></script>
+                <script type="text/javascript">
+                    $(function() {
+                        var editor = editormd("question-editor", {
+                            width: "100%",
+                            height: "250px",
+                            placeholder: "问题补充(必填,参照右侧提示)",
+                            // toolbarIcons: "simple",  //工具栏图标设置为简易版，完整版比较多，分行显示效果不佳
+                            // markdown: "xxxx",     // dynamic set Markdown text
+                            path : "editor.md/lib/"  // Autoload modules mode, codemirror, marked... dependents libs path
+                        });
+                    });
+                </script>
                 <div class="form-group">
                     <label for="tag">添加标签</label>
                     <textarea class="form-control" rows="1" readonly="true" name="tag" id="tag" th:text="${tag}" placeholder="请在下面的标签栏选择标签..."></textarea>
@@ -96,7 +111,9 @@
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>问题发起指南</h3>
             ● 问题标题： 请用精简的语言描述您发布的问题，不超过25字 <br> <br>
-            ● 问题补充： 详细补充您的问题内容，并确保问题描述清晰直观，并提供一些相关的资料 <br> <br>
+            ● 问题补充： 详细补充您的问题内容，并确保问题描述清晰直观，并提供一些相关的资料
+            <br>问题补充输入框支持<a href="https://pandao.github.io/editor.md/">Markdown语法</a>，能更清晰的展示您的代码或者图片。
+            <br> <br>
             ● 选择标签： 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字 <br> <br>
 
             ● 关于积分： 发起一个问题会消耗您 20 个积分，每多一个回复你将获得 5 个积分的奖励，为了您的利益，在发起问题的时候希望能够更好地描述您的问题以及多使用站内搜索功能。<br>

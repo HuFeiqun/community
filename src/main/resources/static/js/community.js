@@ -173,7 +173,7 @@ function loadTagCss() {
         return;
     var tags = tag_content.substr(0,tag_content.length-1).split(",");
     for(index=0;index<tags.length;index++){
-        console.log(tags[index]);
+        // console.log(tags[index]);
         $("#tag-"+tags[index]).css("background-color","gray");   //将已选中标签标记为灰色
     }
 

@@ -15,7 +15,9 @@ https://spring.io/
 ## 工具
 [JSON在线解析工具](https://jsoneditoronline.org/)
 [JavaScript 日期处理类库](http://momentjs.cn/)
- [时间显示化教程](https://blog.csdn.net/qcg14774125/article/details/86523976)
+ [时间显示汉化教程](https://blog.csdn.net/qcg14774125/article/details/86523976)
+ 
+[开源在线 Markdown 编辑器](https://pandao.github.io/editor.md/)
 [apipost]
 
 ## 学习文章
@@ -24,6 +26,8 @@ https://spring.io/
 
 ## 遇到问题
 P7 下拉列表不显示 先引入jquery
+
+js文件引入 无需重启：可以直接通过 右键项目名称->maven->reimport
 
 
 ## 脚本

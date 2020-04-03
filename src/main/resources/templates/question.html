@@ -11,6 +11,10 @@
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/moment.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/editor.md/css/editormd.preview.css" />
+    <script src="/editor.md/editormd.js"></script>
+    <script src="/editor.md/lib/marked.min.js"></script>
+    <script src="/editor.md/lib/prettify.min.js"></script>
 </head>
 <script type="application/javascript">
     window.onload = function () {  //加载完成执行，判断是否展开某一条二级评论(会展开刚添加二级回复)
@@ -43,7 +47,20 @@
                     <a th:href="@{'/index?tag='+${tag}}"><span class="label label-info my_label" th:text="${tag}"></span></a> &nbsp;&nbsp;&nbsp;
                 </span>
                 <br>
-                <p th:text="${question.description}" class="mark question_desc_box">问题详情</p>
+                <p class="mark question_desc_box" id="question-desc-view">
+                    问题详情
+                    <textarea style="display:none;" th:text="${question.description}">### Hello world!</textarea>
+                </p>
+                <script type="text/javascript">
+                    $(function() {
+                        var testView = editormd.markdownToHTML("question-desc-view", {
+                            // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
+                            // htmlDecode : true,  // Enable / disable HTML tag encode.
+                            // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+                        });
+                    });
+                </script>
+
                 <hr class="custom_hr">
                 <div class="comment_count_info navbar-right"><span th:text="${question.commentCount}"></span>个回复</div>
             </div>
