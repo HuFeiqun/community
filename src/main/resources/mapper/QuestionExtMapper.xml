@@ -38,18 +38,32 @@
     </select>
 
     <!--获取含指定标签的问题，且包含分页参数，所有查询参数封装在QuestionQueryDto-->
-    <select id="selectByTag" parameterType="life.majiang.community.dto.QuestionQueryDto" resultMap="BaseResultMap">
+    <select id="selectByQueryDto" parameterType="life.majiang.community.dto.QuestionQueryDto" resultMap="BaseResultMap">
         select *
         from question
-        where tag regexp #{tag,jdbcType=VARCHAR}
+        <where>
+            <if test="tag != null and tag!='null'">
+                and tag regexp #{tag,jdbcType=VARCHAR}
+            </if>
+            <if test="keyword != null and keyword != 'null'">
+                and title regexp #{keyword,jdbcType=VARCHAR}
+            </if>
+        </where>
         limit #{offset},#{size}
     </select>
 
     <!--获取含指定标签的问题，且包含分页参数，所有查询参数封装在QuestionQueryDto-->
-    <select id="selectByTagCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <select id="countByQueryDto" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(1)
         from question
-        where tag regexp #{tag,jdbcType=VARCHAR}
+        <where>
+            <if test="tag != null and tag!='null'">
+                and tag regexp #{tag,jdbcType=VARCHAR}
+            </if>
+            <if test="keyword != null and keyword != 'null'">
+                and title regexp #{keyword,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 
 

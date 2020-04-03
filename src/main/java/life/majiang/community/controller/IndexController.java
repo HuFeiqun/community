@@ -1,10 +1,7 @@
 package life.majiang.community.controller;
 
 import life.majiang.community.dto.QuestionDto;
-import life.majiang.community.mapper.QuestionExtMapper;
-import life.majiang.community.mapper.QuestionMapper;
-import life.majiang.community.mapper.UserMapper;
-import life.majiang.community.model.QuestionExample;
+import life.majiang.community.dto.QuestionQueryDto;
 import life.majiang.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,36 +20,23 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private QuestionMapper questionMapper;
-
-    @Autowired
-    private QuestionExtMapper questionExtMapper;
-
-    @Autowired
     private QuestionService questionService;
     @GetMapping({"/","/index"})
     public String index(Model model,
                         @RequestParam(name = "page",defaultValue = "1") Integer page,
                         @RequestParam(name = "size",defaultValue = "5") Integer size,
-                        @RequestParam(name = "tag",required = false) String tag){
-        List<QuestionDto> list;
-        double pageNum;   //分页的页面数
-        if(tag!=null && !"null".equals(tag)){
-            model.addAttribute("tag",tag);
-            list = questionService.listByTag(tag,page,size);
-            pageNum =  Math.ceil(questionExtMapper.selectByTagCount(tag)*1.0/size);
-        }
-        else {
-            list = questionService.list(page, size);
-            pageNum =  Math.ceil(questionMapper.countByExample(new QuestionExample())*1.0/size);
-        }
-        model.addAttribute("questions",list);
+                        @RequestParam(name = "tag",defaultValue = "null") String tag,
+                        @RequestParam(name = "keyword",defaultValue = "null") String serachKeyWord
+                        ){
+        int offset = (page-1)*size;   //分页查询的偏移量
+        QuestionQueryDto questionQueryDto = new QuestionQueryDto(tag,serachKeyWord,offset,size);
+//        System.out.println(questionQueryDto.toString());
+        List<QuestionDto> questionDtos = questionService.selectByQueryDto(questionQueryDto);
+        int pageNum = (int) Math.ceil(questionService.CountByQueryDto(questionQueryDto)*1.0/size);   //分页的页数
+        model.addAttribute("questions",questionDtos);
         model.addAttribute("pageNum",pageNum);
+        model.addAttribute("tag",tag);
+        model.addAttribute("keyword",serachKeyWord);
         return "/index";
     }
-
-
 }

@@ -18,11 +18,15 @@ https://spring.io/
  [时间显示汉化教程](https://blog.csdn.net/qcg14774125/article/details/86523976)
 [Bootstrap手册](https://www.jqhtml.com/bootstraps-syntaxhigh/index.html)
 [开源在线 Markdown 编辑器](https://pandao.github.io/editor.md/)
++ 输入框引入编辑器
++ markdown to html
++ 图片上传
 [apipost]
 
 ## 学习文章
 [thymeleaf页面中使用data-*自定义属性](https://blog.csdn.net/Milogenius/article/details/90212589?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
-
+data-*标签
+[MYBATIS-动态SQL的IF、CHOOSE、WHEN、OTHERWISE、TRIM、WHERE、SET、FOREACH使用(各种标签详解), 以及实体间关系配置](https://www.cnblogs.com/hahajava/p/9755474.html)
 
 ## 遇到问题
 P7 下拉列表不显示 先引入jquery
@@ -167,3 +171,6 @@ P42 lambda表达式
 ## bug
 折叠侧边问题发布规则后问题描述栏目显示有小问题 
 思路：为textarea添加 col-lg-12即解决
+
+未登录情况下点击会出错，且没有错误提示信息
+

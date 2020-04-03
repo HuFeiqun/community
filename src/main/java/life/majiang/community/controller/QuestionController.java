@@ -1,6 +1,7 @@
 package life.majiang.community.controller;
 
 import life.majiang.community.dto.CommentDto;
+import life.majiang.community.dto.ResultDto;
 import life.majiang.community.enums.CommentTypeEnum;
 import life.majiang.community.exception.CustomizeErrorCode;
 import life.majiang.community.exception.CustomizeException;
@@ -43,6 +44,10 @@ public class QuestionController {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         User user = (User) request.getSession().getAttribute("user");
+        if(user==null)
+        {
+            throw new CustomizeException(CustomizeErrorCode.NOT_LOGIN);
+        }
         model.addAttribute("user",user);
         List<CommentDto>  commentDtos = commentService.listByParentId(id, CommentTypeEnum.QUESTION);
         model.addAttribute("commentDtos",commentDtos);

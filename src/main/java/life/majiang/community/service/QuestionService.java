@@ -32,23 +32,9 @@ public class QuestionService {
     @Autowired
     private QuestionExtMapper questionExtMapper;
 
-    //获取问题dto（除了问题表的字段外还包含了用户表的信息）集合
-    public List<QuestionDto> list(Integer page,Integer size){
-        int offset = (page-1)*size;
-        List<QuestionDto> questionDtos = new ArrayList<>();
-        QuestionExample example = new QuestionExample();
-        example.setOrderByClause("gmt_modified desc");
-        List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(example, new RowBounds(offset, size));
-        for (Question question:questions){
-            QuestionDto questionDto = new QuestionDto();
-            BeanUtils.copyProperties(question,questionDto);
-            User user = userMapper.selectByPrimaryKey(question.getCreator());
-            questionDto.setUser(user);
-            questionDtos.add(questionDto);
-        }
-        return questionDtos;
-    }
 
+
+    //也可以封装到selectByQueryDto。
     public List<QuestionDto> listMyQuestion(Long id,Integer page,Integer size){
         int offset = (page-1)*size;
         List<QuestionDto> questionDtos = new ArrayList<>();
@@ -101,18 +87,10 @@ public class QuestionService {
         return relatedQuestions;
     }
 
-    public List<QuestionDto> listByTag(String tag,Integer page,Integer size){
-        int offset = (page-1)*size;
+    //根据封装好的查询dto查询符合条件的所有问题
+    public List<QuestionDto> selectByQueryDto(QuestionQueryDto questionQueryDto){
         List<QuestionDto> questionDtos = new ArrayList<>();
-        QuestionExample example = new QuestionExample();
-        example.createCriteria()
-                .andTagEqualTo(tag);
-        example.setOrderByClause("gmt_modified desc");
-        QuestionQueryDto questionQueryDto = new QuestionQueryDto();
-        questionQueryDto.setTag(tag);
-        questionQueryDto.setOffset(offset);
-        questionQueryDto.setSize(size);
-        List<Question> questions = questionExtMapper.selectByTag(questionQueryDto);
+        List<Question> questions = questionExtMapper.selectByQueryDto(questionQueryDto);
         for (Question question:questions){
             QuestionDto questionDto = new QuestionDto();
             BeanUtils.copyProperties(question,questionDto);
@@ -121,5 +99,11 @@ public class QuestionService {
             questionDtos.add(questionDto);
         }
         return questionDtos;
+    }
+
+    //根据封装好的查询dto查询符合条件的所有问题条数
+    public int CountByQueryDto(QuestionQueryDto questionQueryDto) {
+        int count = questionExtMapper.countByQueryDto(questionQueryDto);
+        return count;
     }
 }

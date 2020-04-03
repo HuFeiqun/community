@@ -225,3 +225,14 @@ function hideOrShowRules() {
     }
 
 }
+
+/**
+ * 根据关键字查询问题
+ */
+// function searchQuestion() {
+//     var keyword = $("#search_keyword").text();
+//     console.log(keyword);
+//     debugger;
+//     $.get( "/index?keyword="+keyword, function() {
+//     });
+// }

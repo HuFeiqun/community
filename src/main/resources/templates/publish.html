@@ -46,7 +46,10 @@
                             height: "250px",
                             placeholder: "问题补充(必填,参照右侧提示)",
                             watch:false,                //默认不打开实时预览。
-                            path : "/editor.md/lib/"  // Autoload modules mode, codemirror, marked... dependents libs path
+                            path : "/editor.md/lib/",    // Autoload modules mode, codemirror, marked... dependents libs path
+                            imageUpload: true,          // Enable/disable upload
+                            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL: "/file/upload",             // Upload url
                             // toolbarIcons: "simple",  //工具栏图标设置为简易版，完整版比较多，分行显示效果不佳
                         });
                     });

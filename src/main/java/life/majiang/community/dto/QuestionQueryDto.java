@@ -10,6 +10,24 @@ import lombok.Data;
 @Data
 public class QuestionQueryDto {
     private String tag;
+    private String keyword;
     private Integer offset;
     private Integer size;
+
+    public QuestionQueryDto(String tag, String keyword, Integer offset, Integer size) {
+        this.tag = tag;
+        this.keyword = keyword;
+        this.offset = offset;
+        this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionQueryDto{" +
+                "tag='" + tag + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", offset=" + offset +
+                ", size=" + size +
+                '}';
+    }
 }
