@@ -118,3 +118,8 @@ body{
 .my_label{
     cursor: pointer;
 }
+
+.my_flod_icon{
+    color: #31b0d5;
+    cursor: pointer;
+}

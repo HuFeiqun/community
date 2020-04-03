@@ -14,12 +14,12 @@ function post() {
 function inner_comment(e) {
     var commentId = e.getAttribute("data-id");
     var content = $("#input-" + commentId).val();
-    console.log("input-" + commentId);
-    console.log(commentId);
-    console.log(content);
+    // console.log("input-" + commentId);
+    // console.log(commentId);
+    // console.log(content);
     var localStorage = window.localStorage;
     localStorage.setItem("reflashInnerComments", commentId);
-    console.log(localStorage.getItem("reflashInnerComments"));
+    // console.log(localStorage.getItem("reflashInnerComments"));
     comment(commentId, content, 2);
 }
 
@@ -183,7 +183,7 @@ function loadTagCss() {
  *选中标签后，将标签添加至标签输入栏
  */
 function selectTag(e){
-    console.log(e);
+    // console.log(e);
     var new_tag = e.getAttribute("data-tag");
     var tag_textarea_element = $("#tag");
     var tag_content = tag_textarea_element.text();
@@ -195,6 +195,33 @@ function selectTag(e){
         tag_textarea_element.text(tag_content.replace(new_tag+",",""));
         $("#tag-"+new_tag).css("background-color","#5bc0de");
         // tag_textarea_element.addClass()
+    }
+}
+
+/**
+ * 隐藏显示侧边栏,并且修改折叠图标的显示状态
+ */
+function hideOrShowRules() {
+    // var id = e.getAttribute("data-id");
+    // var span_element = $("#"+id);
+    var edit_part_element = $("#edit-part");  //获取左边的编辑栏所在的div
+    var rules_part_element = $("#rules-part");  //获取右边的问题发布规则所在的div
+    var icon1_class="glyphicon glyphicon-chevron-right my_flod_icon";     //展开图标
+    var icon2_class="glyphicon glyphicon-chevron-left my_flod_icon";     //折叠图标
+    var current_icon_element = $("#hideOrShowIcon");               //当前图标
+    if(current_icon_element.hasClass(icon1_class)){
+        edit_part_element.removeClass("col-lg-9");
+        edit_part_element.addClass("col-lg-12");
+        rules_part_element.css("display","none");
+        current_icon_element.removeClass(icon1_class);
+        current_icon_element.addClass(icon2_class);
+    }
+    else {
+        edit_part_element.removeClass("col-lg-12");
+        edit_part_element.addClass("col-lg-9");
+        rules_part_element.css("display","block");
+        current_icon_element.removeClass(icon2_class);
+        current_icon_element.addClass(icon1_class);
     }
 
 }

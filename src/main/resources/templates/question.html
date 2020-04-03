@@ -122,7 +122,7 @@
                 </div>
 
                 <input type="hidden" id="question_id" th:value="${question.id}">
-                <textarea id="comment_content" class="form-control comment_textBox" rows="6"></textarea>
+                <textarea id="comment_content" style="resize:none;" class="form-control comment_textBox" rows="6"></textarea>
                 <button type="button" class="btn btn-success comment_submit_button" onclick="post()">回复</button>
             </div>
         </div>

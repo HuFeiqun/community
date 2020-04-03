@@ -16,7 +16,7 @@ https://spring.io/
 [JSON在线解析工具](https://jsoneditoronline.org/)
 [JavaScript 日期处理类库](http://momentjs.cn/)
  [时间显示汉化教程](https://blog.csdn.net/qcg14774125/article/details/86523976)
- 
+[Bootstrap手册](https://www.jqhtml.com/bootstraps-syntaxhigh/index.html)
 [开源在线 Markdown 编辑器](https://pandao.github.io/editor.md/)
 [apipost]
 
@@ -165,3 +165,5 @@ P42 lambda表达式
 
 
 ## bug
+折叠侧边问题发布规则后问题描述栏目显示有小问题 
+思路：为textarea添加 col-lg-12即解决
