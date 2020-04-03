@@ -109,3 +109,8 @@ body{
 .my_wechat_img{
     width: 300px;
 }
+
+.my_notification_li{
+    /*list-style-type:none;*/
+    margin-bottom: 30px;
+}

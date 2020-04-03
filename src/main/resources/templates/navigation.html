@@ -34,7 +34,9 @@
                          <a href="/publish" >提问 <span class="glyphicon glyphicon-send"></span></a>
                     </li>
                     <li th:if="${session.user}!=null" class="menu_item">
-                        <a href="/publish"> 通知 <span class="glyphicon glyphicon-bell"> </span> </a>
+                        <a href="/profile/replies"> 通知 <span class="glyphicon glyphicon-bell" th:if="${session.user==null || session.notReadCount==0}"> </span>
+                            <span class="badge" th:if="${session.user != null && session.notReadCount != 0}" th:text="${session.notReadCount}">99+</span>
+                        </a>
                     </li>
                     <li class="dropdown menu_item" th:if="${session.user!=null}">
                         <!--登录就显示“我”，未登录显示“登录”-->

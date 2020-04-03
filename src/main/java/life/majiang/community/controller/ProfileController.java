@@ -1,9 +1,12 @@
 package life.majiang.community.controller;
 
+import life.majiang.community.dto.NotificationDto;
 import life.majiang.community.dto.QuestionDto;
+import life.majiang.community.mapper.NotificationMapper;
 import life.majiang.community.mapper.QuestionMapper;
 import life.majiang.community.model.QuestionExample;
 import life.majiang.community.model.User;
+import life.majiang.community.service.NotificationService;
 import life.majiang.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,9 @@ public class ProfileController {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Autowired
+    private NotificationService notificationService;
+
 
     @GetMapping("/profile/{section}")
     public String profile(HttpServletRequest request,
@@ -51,9 +57,13 @@ public class ProfileController {
             model.addAttribute("pageNum",pageNum);
 
         }
-        else if("replies".equals(section)){
+        else if("replies".equals(section)){  //查数据库跟自己相关的通知
             model.addAttribute("sectionTitle","最新回复");
-            model.addAttribute("pageNum",0);
+            List<NotificationDto> notificationDtos = notificationService.listMyNotifications(user.getId(), page, size);
+            model.addAttribute("notifications",notificationDtos);
+            int myNotificationsCount = notificationService.countMyNotifications(user.getId());
+            double pageNum =  Math.ceil(myNotificationsCount*1.0/size); //算出页面数
+            model.addAttribute("pageNum",pageNum);
         }
         return "profile";
 

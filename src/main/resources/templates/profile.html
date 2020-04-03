@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>社区</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <!--注意这里css的路径 区别于一级目录-->
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
     <script src="/js/jquery.js" type="application/javascript"></script>
+    <script src="/js/moment.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
@@ -15,29 +16,56 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9">
-            <h3 th:text="${sectionTitle}">我的提问</h3><hr>
+            <h3 th:text="${sectionTitle}">我的提问</h3>
+            <hr>
 
+            <!--我的提问板块-->
             <div class="media" th:each="question:${questions}" th:if="${sectionName=='questions'}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object thumbnail" src="https://avatars3.githubusercontent.com/u/39849015?v=4" alt="加载失败" >
+                        <img class="media-object thumbnail" src="https://avatars3.githubusercontent.com/u/39849015?v=4"
+                             alt="加载失败">
                     </a>
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading"><a th:href="@{'/question/'+${question.id}}">[[${question.title}]]</a></h4>
                     <span th:text="${#strings.abbreviate(question.description,25)}">问题描述</span>
-                    <span class="count_info"> <span th:text="${question.viewCount}"></span>人浏览 • <span th:text="${question.likeCount}"></span>个点赞  • <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}">2000年5月5日</span> </span>
+                    <span class="count_info"> <span th:text="${question.viewCount}"></span>人浏览 • <span
+                            th:text="${question.likeCount}"></span>个点赞  • <span
+                            th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}">2000年5月5日</span> </span>
                 </div>
                 <!--<hr>-->
             </div>
-            <nav aria-label="Page navigation" class="navbar-right"  >
+
+            <!--最新回复板块-->
+            <div class="media" th:if="${sectionName=='replies'}">
+                <ul>
+                    <li th:each="notification:${notifications}" class="my_notification_li">
+                        <span th:id ="span-time-+${notification.getId()}">
+                            <script>
+                                var a = moment([[${notification.getGmtCreate()}]]).fromNow();
+                                $("#span-time-"+[[${notification.getId()}]]).text(a);
+                            </script> ,
+                        </span>
+                        <a><span th:text="${notification.getNotifier().name}">通知者</span></a>
+                        <span th:text="${notification.getNotifiyType()}">通知方式</span>
+                        <a th:href="@{'/notification/'+${notification.getId()}+'/'+${notification.getOuterId()}}"><span
+                                th:text="${notification.getOuterTitle()}">跳转问题</span></a>
+                        <span class="label label-danger" th:if="${notification.getStatus()==0}">未读</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!--分页标注-->
+            <nav aria-label="Page navigation" class="navbar-right">
                 <ul class="pagination">
                     <li>
                         <a href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li><a th:href="@{'/profile/questions?page='+${i}}" th:each="i:${#numbers.sequence(1,pageNum)}" th:text="${i}" name="page"></a></li>
+                    <li><a th:href="@{'/profile/'+${sectionName}+'?page='+${i}}" th:each="i:${#numbers.sequence(1,pageNum)}"
+                           th:text="${i}" name="page"></a></li>
 
                     <li>
                         <a href="#" aria-label="Next">
@@ -52,17 +80,17 @@
 
         <div class="col-lg-3">
             <div class="list-group">
-                <a href="/profile/questions" th:class="${sectionName=='questions'}?'list-group-item active':'list-group-item '">我的问题</a>
-                <a href="/profile/replies" th:class="${sectionName=='replies'}?'list-group-item active':'list-group-item'">
-                    最新回复
-                    <span class="badge">14</span>
+                <a href="/profile/questions"
+                   th:class="${sectionName=='questions'}?'list-group-item active':'list-group-item '">我的问题</a>
+                <a href="/profile/replies"
+                   th:class="${sectionName=='replies'}?'list-group-item active':'list-group-item'">
+                    最新回复<span class="badge" th:text="${session.notReadCount}">99+</span>
                 </a>
             </div>
         </div>
 
     </div>
 </div>
-
 
 
 </body>

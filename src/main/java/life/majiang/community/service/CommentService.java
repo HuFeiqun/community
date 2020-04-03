@@ -2,13 +2,12 @@ package life.majiang.community.service;
 
 import life.majiang.community.dto.CommentDto;
 import life.majiang.community.enums.CommentTypeEnum;
+import life.majiang.community.enums.NotificationStatusEnum;
+import life.majiang.community.enums.NotificationTypeEnum;
 import life.majiang.community.exception.CustomizeErrorCode;
 import life.majiang.community.exception.CustomizeException;
 import life.majiang.community.mapper.*;
-import life.majiang.community.model.Comment;
-import life.majiang.community.model.CommentExample;
-import life.majiang.community.model.Question;
-import life.majiang.community.model.User;
+import life.majiang.community.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +38,13 @@ public class CommentService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private NotificationMapper notificationMapper;
+
+    /**
+     * 将回复插入到数据库，并且生成通知
+     * @param comment
+     */
     @Transactional
     public void insertSelective(Comment comment) {
         if (comment.getParentId() == null || comment.getParentId() == 0) {
@@ -60,8 +66,10 @@ public class CommentService {
             example.createCriteria()
                     .andIdEqualTo(comment.getParentId());
             List<Comment> comments = commentMapper.selectByExample(example);
-            comments.get(0).setCommentCount(1);
-            commentExtMapper.incCommentCount(comments.get(0));      //更新此一级回复的的回复数
+            Comment parentComment = comments.get(0);
+            parentComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(parentComment);      //更新此一级回复的的回复数
+            createNotification(comment, parentComment.getCommentator());   //生成通知
         }
         else
         { //一级回复
@@ -72,7 +80,32 @@ public class CommentService {
             commentMapper.insertSelective(comment);
             question.setCommentCount(1);
             questionExtMapper.incCommentCount(question);    //更新此问题的回复数
+            createNotification(comment,question.getCreator()); //生成通知
         }
+
+
+    }
+
+    /**
+     * 回复后立即生成通知
+     * @param comment
+     * @param receiver   用于标识被通知对象
+     */
+    private void createNotification(Comment comment,Long receiver) {
+        Notification notification = new Notification();
+        notification.setNotifier(comment.getCommentator());
+        notification.setReceiver(receiver);
+        notification.setOuterId(comment.getParentId());
+        if(comment.getType()==CommentTypeEnum.QUESTION.getType()){
+            notification.setType(NotificationTypeEnum.REPLY_QUESTION.getType());
+        }
+        else {
+            notification.setType(NotificationTypeEnum.REPLY_COMMENT.getType());
+        }
+
+        notification.setStatus(NotificationStatusEnum.NOT_READ.getStatus());
+        notification.setGmtCreate(System.currentTimeMillis());
+        notificationMapper.insertSelective(notification);
     }
 
     /**

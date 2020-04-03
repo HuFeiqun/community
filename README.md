@@ -15,6 +15,7 @@ https://spring.io/
 ## 工具
 [JSON在线解析工具](https://jsoneditoronline.org/)
 [JavaScript 日期处理类库](http://momentjs.cn/)
+ [时间显示化教程](https://blog.csdn.net/qcg14774125/article/details/86523976)
 [apipost]
 
 ## 学习文章
@@ -78,9 +79,31 @@ create table comment
 alter table comment
 	add comment_count int default 0 null;
 
+```
+
+
+创建通知表
+```sql
+create table notification
+(
+	id bigint auto_increment,
+	notifier bigint not null,
+	receiver bigint not null,
+	outerId bigint not null comment '标识所涉及到的问题或者回复的id',
+	type int not null comment '区分通知的类型（点赞、回复问题、评论回复）',
+	gmt_create bigint not null,
+	status int default 0 not null comment '通知的读取状态（已读1，未读0）',
+	constraint notification_pk
+		primary key (id)
+);
+alter table notification change outerId outer_id bigint not null comment '标识所涉及到的问题或者回复的id';
+
 
 
 ```
+
+
+
 **快捷键**
 shift+F9  只改html
 cmd+ alt + o 去除无用的引入 
@@ -96,7 +119,7 @@ ctrl+shift+F
 ctrl+F12 
 ctrl+shift + U 大小写转换
 调试时： alt+F8 调试时执行选中的方法
-
+选中我即将抽取的代码，按快捷键Ctrl + Alt + M 即可
 
 ### 学习体会
 updateByExample需要将表的条件全部给出，比如一个一个表有三个字段，就必须给三个字段给他，不给会设为null，

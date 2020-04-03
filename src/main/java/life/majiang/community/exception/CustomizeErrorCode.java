@@ -13,6 +13,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     TYPE_PARAM_NOT_FOUND(2005,"回复类型有误！"),
     COMMENT_NOT_FOUND(2006,"回复的评论不存在!"),
     COMMENT_IS_EMPTY(2006,"回复内容不能为空！"),
+    NOT_YOUR_NOTIFICATION(2007,"权限不足，无法读取他人通知！"),
+
 
 
 
